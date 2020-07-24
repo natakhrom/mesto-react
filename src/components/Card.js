@@ -7,7 +7,7 @@ function Card({card, onCardClick}) {
 
     return (
         <li className="card">
-            <div className="card__image" style={{ backgroundImage: `url(${card.link})` }} onClick={handleClick}></div>
+            <div className="card__image" style={{ backgroundImage: `url(${card.link})`}} onClick={handleClick}></div>
             <h2 className="card__text">{card.name}</h2>
             <button className="card__button-like" type="button" aria-label="кнопка Нравится"></button>
             <div className="card__counter-likes">{card.likes.length}</div>
