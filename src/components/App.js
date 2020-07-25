@@ -61,9 +61,7 @@ function App() {
                     <span id="avatar-input-error" className="popup__info-error popup__info-error-avatar"></span>
                 </fieldset>
             </PopupWithForm>
-            <PopupWithForm name="image-delete" title="Вы уверены?"> 
-                <button type="submit" className="popup__button popup__button-delete">Да</button>
-            </PopupWithForm>
+            <PopupWithForm name="image-delete" title="Вы уверены?" btnText="Да" /> 
             <ImagePopup card={selectedCard} onClose={closeAllPopups} />
             <Footer /> 
         </div>
