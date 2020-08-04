@@ -79,6 +79,15 @@ class Api {
             headers: this._headers
         });
     }
+
+    changeLikeCardStatus(cardId, isLiked) {
+        if (isLiked) {
+            return this.putLike(cardId);
+        }
+        else {
+            return this.deleteLike(cardId);
+        }
+    }
 }
 
 const api = new Api({

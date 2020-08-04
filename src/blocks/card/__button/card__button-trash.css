@@ -19,6 +19,10 @@
     opacity: 0.6;
 }
 
-.card__button-trash_hide {
+.card__button-trash_visible {
+    visibility: visible;
+}
+
+.card__button-trash_hidden {
     visibility: hidden;
 }
