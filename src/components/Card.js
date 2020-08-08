@@ -4,17 +4,17 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext'
 function Card({card, onCardClick, onCardLike, onCardDelete}) {
     const currentUser = React.useContext(CurrentUserContext); 
     
-    // Определяем, являемся ли мы владельцем текущей карточки
+    /** Определяем, являемся ли мы владельцем текущей карточки */
     const isOwn = card.owner._id === currentUser._id;
-    // Создаём переменную, которую после зададим в `className` для кнопки удаления
+    /** Создаём переменную, которую после зададим в `className` для кнопки удаления */
     const cardDeleteButtonClassName = (
     `card__button-trash ${isOwn ? 'card__button-trash_visible' : 'card__button-trash_hidden'}`
   );
 
-    // Определяем, есть ли у карточки лайк, поставленный текущим пользователем
+    /** Определяем, есть ли у карточки лайк, поставленный текущим пользователем */
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
-    // Создаём переменную, которую после зададим в `className` для кнопки лайка
+    /** Создаём переменную, которую после зададим в `className` для кнопки лайка */
     const cardLikeButtonClassName = `card__button-like ${isLiked ? 'card__button-like_active' : 'card__button-like'}`;
 
     function handleClick() {

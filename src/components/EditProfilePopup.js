@@ -2,9 +2,9 @@ import React from 'react';
 import PopupWithForm from './PopupWithForm'
 import { CurrentUserContext } from '../contexts/CurrentUserContext'
 
-function EditProfilePopup(props) {
-    const [name, setName] = React.useState("Жак-Ив Кусто");
-    const [description, setDescription] = React.useState("Исследователь океана");
+function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
+    const [name, setName] = React.useState('');
+    const [description, setDescription] = React.useState('');
     const currentUser = React.useContext(CurrentUserContext);
 
     function handleNameChange(e) {
@@ -18,15 +18,15 @@ function EditProfilePopup(props) {
     function closeForm() {
         setName(currentUser.name);
         setDescription(currentUser.about);
-        props.onClose();
+        onClose();
     };
 
     function handleSubmit(e) {
-        // Запрещаем браузеру переходить по адресу формы
+        /** Запрещаем браузеру переходить по адресу формы */
         e.preventDefault();
       
-        // Передаём значения управляемых компонентов во внешний обработчик
-        props.onUpdateUser({
+        /** Передаём значения управляемых компонентов во внешний обработчик */
+        onUpdateUser({
           name,
           about: description,
         });
@@ -38,7 +38,7 @@ function EditProfilePopup(props) {
       }, [currentUser]);
 
     return (
-        <PopupWithForm name="edit-form" title="Редактировать профиль" btnText="Сохранить" isOpen={props.isOpen} onClose={closeForm} onSubmit={handleSubmit}> 
+        <PopupWithForm name="edit-form" title="Редактировать профиль" btnText="Сохранить" isOpen={isOpen} onClose={closeForm} onSubmit={handleSubmit}> 
             <fieldset className="popup__input">
                 <input id="name-input" type="text" name="firstname" value={name} placeholder="Имя" className="popup__info popup__info_name" required pattern="[A-Za-zА-Яа-я -]{1,}" minLength="2" maxLength="40" onChange={handleNameChange} /> 
                 <span id="name-input-error" className="popup__info-error"></span>

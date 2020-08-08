@@ -1,16 +1,16 @@
 import React from 'react' 
 import PopupWithForm from './PopupWithForm';
 
-function DeleteConfirmationPopup(props) {
+function DeleteConfirmationPopup({ onConfirm, cardToDelete, onClose }) {
     function handleSubmit(e) {
-        // Запрещаем браузеру переходить по адресу формы
+        /** Запрещаем браузеру переходить по адресу формы */ 
         e.preventDefault();
 
-        props.onConfirm(props.cardToDelete);
+        onConfirm(cardToDelete);
     }
 
     return (
-        <PopupWithForm name="image-delete" title="Вы уверены?" btnText="Да" isOpen={props.cardToDelete === undefined ? false : true} onClose={props.onClose} onSubmit={handleSubmit}/> 
+        <PopupWithForm name="image-delete" title="Вы уверены?" btnText="Да" isOpen={cardToDelete === undefined ? false : true} onClose={onClose} onSubmit={handleSubmit}/> 
     )
 }
 

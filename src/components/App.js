@@ -51,6 +51,7 @@ function App() {
             setCurrentUser(userInfoResponse);
             closeAllPopups();
         })
+        .catch(error => console.log(error));
     }
 
     function handleUpdateAvatar({avatar}) {
@@ -59,20 +60,22 @@ function App() {
             setCurrentUser(res);
             closeAllPopups();
         })
+        .catch(error => console.log(error));
     }
 
     function handleCardLike(card) {
-        // Снова проверяем, есть ли уже лайк на этой карточке
+        /** Снова проверяем, есть ли уже лайк на этой карточке */
         const isLiked = card.likes.some(i => i._id === currentUser._id);
             
-        // Отправляем запрос в API и получаем обновлённые данные карточки
+        /** Отправляем запрос в API и получаем обновлённые данные карточки */
         api.changeLikeCardStatus(card._id, !isLiked)
         .then(newCard => {
-            // Формируем новый массив на основе имеющегося, подставляя в него новую карточку
+            /** Формируем новый массив на основе имеющегося, подставляя в него новую карточку */
             const newCards = cards.map(c => c._id === card._id ? newCard : c);
-            // Обновляем стейт
+            /** Обновляем стейт */
             setCards(newCards);
-        });
+        })
+        .catch(error => console.log(error));
     };
 
     function handleCardDeleteRequest(card) {
@@ -85,7 +88,8 @@ function App() {
             const newCards = cards.filter(c => c._id !== card._id);
             setCards(newCards);
             closeAllPopups();
-        });
+        })
+        .catch(error => console.log(error));
     }
 
     function handleAddPlaceSubmit({name, link}) {
@@ -94,22 +98,17 @@ function App() {
             setCards([...cards, newCard]);
             closeAllPopups();
         })
+        .catch(error => console.log(error));
     }
 
     React.useEffect(() => {
-        api.getUserInfo()
-        .then((userInfoResponse) => {
-            setCurrentUser(userInfoResponse);
-        })
-        .catch(error => console.log(error));
-    }, [])
-
-    React.useEffect(()=> {
-        api.getInitialCards()
-        .then((cardsResponse) => {
-            setCards(cardsResponse);
-        })
-        .catch(error => console.log(error));
+        Promise
+            .all([api.getUserInfo(), api.getInitialCards()])
+            .then(([userInfoResponse, cardsResponse]) => {
+                    setCurrentUser(userInfoResponse);
+                    setCards(cardsResponse);
+            })
+            .catch(error => console.log(error));
     }, []);
 
     return (
